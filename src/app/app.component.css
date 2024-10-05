@@ -1,0 +1,10 @@
+.btn-to-top{
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: #33516a;
+}
+
+.btn-to-top:hover{
+  opacity: .7;
+}

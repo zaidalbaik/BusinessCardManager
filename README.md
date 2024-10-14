@@ -1,27 +1,43 @@
-# BusinessCardManager
+# Business Card Manager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.8.
+## Project Name and Description
 
-## Development server
+The project name is **Business Card Manager**.  
+It is intended to easily manage business cards through our web application.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Purpose and Features of the App
 
-## Code scaffolding
+- Easily manage business cards.
+- User-friendly web interface.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Required Packages
 
-## Build
+The application requires the following packages:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- `"@lottiefiles/lottie-player": "^2.0.4"`
+- `"@types/file-saver": "^2.0.7"`
+- `"bootstrap": "^5.3.3"`
 
-## Running unit tests
+## How to Operate the Application
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 1. Angular Frontend Integration
 
-## Running end-to-end tests
+The Angular frontend requires the Base URL of this API project. Copy the Base URL (or domain) of this project and paste it into the Angular project configuration as the base URL.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Replace the TypeScript code in `AppConstants` with your base URL:
 
-## Further help
+```typescript
+export class AppConstants {
+  static readonly baseURL: string = "http://localhost:YOUR_PORT";
+}
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 2. Run the Business Card Manager API Project
+
+### 3. Start the Angular Application
+
+Run the following command to start the application using vs code Terminal:
+
+```
+ng serve -o
+```

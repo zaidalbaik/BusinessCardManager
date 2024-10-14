@@ -1,0 +1,22 @@
+<div class="home-screen container-fluid">
+  <div class="home-cover">
+    <div id="menu-jk" class="header navbarzaid navbar-expand-lg fixed-top position-fixed"
+      [ngClass]="{'scrolledd': isScrolled}">
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-8 logo">
+            <h1 class="text-light pt-2 gradient-text ps-4">
+              <a style="color: #004080;" [routerLink]="['/home']">
+                <strong>Business Cards</strong>
+              </a>
+            </h1>
+          </div>
+          <div class="col-auto ">
+            <button class="btn border-2" style="border-color: #004080; color: #004080;"
+              (click)="navTo('AddBusinessCard')">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

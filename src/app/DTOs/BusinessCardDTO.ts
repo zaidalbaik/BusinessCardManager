@@ -5,5 +5,5 @@ export interface BusinessCardDto {
   email: string;
   phone: string;
   address: string;
-  photoBase64?: string;
+  photoBase64?: string | null;
 }

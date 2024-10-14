@@ -1,1 +1,280 @@
-<p>add-business-card works!</p>
+<section class="container my-5 pt-5">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs flex-nowrap justify-content-center overflow-auto pb-2 mb-3 mb-lg-4">
+    <li class="nav-item">
+      <button class="nav-link text-nowrap" [ngClass]="{'active': fromForm}" (click)="selectTab(true)">
+        Using Form
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link text-nowrap" [ngClass]="{'active': !fromForm}" (click)="selectTab(false)">
+        Import 'Xml', 'Csv'
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tabs -->
+  <div class="tab-content rounded-3 py-4">
+    <!-- From 'Form' -->
+    <div class="tab-pane fade" [ngClass]="{'show active': fromForm}">
+      <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+        <div class="col-md-10 mx-auto text-start">
+          <!-- Business Card form Container -->
+          <div class="container d-flex flex-wrap justify-content-center h-100 pt-3">
+            <div class="w-100 align-self-end pt-1 pt-md-4 pb-4" style="max-width: 800px;">
+              <h1 class="text-center">Add Business Card</h1>
+              <!-- Business Card form  -->
+              <form [formGroup]="addBusinessCardForm" autocomplete="off">
+                <div class="row">
+                  <!-- Name -->
+                  <div class="col-md-6">
+                    <div class="position-relative mb-4">
+                      <label for="name" class="form-label fs-base">Name</label>
+                      <input id="name" placeholder="Enter your name" type="text" class="form-control form-control-lg"
+                        formControlName="name" autofocus="false">
+                      <div class="text-danger position-absolute start-0 top-100">
+                        @if(name?.touched){
+                        @if (name?.errors?.['required']){
+                        <span>This field is required.</span>
+                        }
+                        @else if(name?.errors?.['maxlength']){
+                        <div class="text-nowrap" style="font-size: 15px;">Length is less than 100 characters</div>
+                        }
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Email -->
+                  <div class="col-md-6">
+                    <div class="position-relative mb-4">
+                      <label for="email" class="form-label fs-base">Email</label>
+                      <input type="email" id="email" placeholder="test@example.com" class="form-control form-control-lg"
+                        formControlName="email">
+                      <div class="text-danger position-absolute start-0 top-100">
+                        @if(email?.touched){
+                        @if (email?.errors?.['required']){
+                        <span>This field is required.</span>
+                        }
+                        @else if (email?.errors?.['email']){
+                        <span>Invalid email format!</span>
+                        }
+                        @else if (email?.errors?.['minlength']){
+                        <span>Length is more than 6 characters</span>
+                        }
+                        @else if (email?.errors?.['maxlength']){
+                        <span>Length is less than 255 characters</span>
+                        }
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Phone -->
+                  <div class="col-md-6">
+                    <div class="position-relative mb-4">
+                      <label for="phone" class="form-label fs-base">Phone Number</label>
+                      <input id="phone" placeholder="Enter your phone number" class="form-control form-control-lg"
+                        formControlName="phone">
+                      <div class="text-danger position-absolute start-0 top-100">
+                        @if (phone?.touched){
+                        @if (phone?.errors?.['required']){
+                        <span>This field is required.</span>
+                        } @else if (phone?.invalid){
+                        <span>Invalid phone format!</span>
+                        }
+                        @else if (phone?.errors?.['maxlength']){
+                        <span>Length is less than 20 characters</span>
+                        }
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Gender -->
+                  <div class="col-md-6">
+                    <div class="position-relative mb-4">
+                      <label for="gender" class="form-label">Gender</label>
+                      <select class="form-select bg-light" id="gender" formControlName="gender" required>
+                        <option value="Male" class="row text-start" selected>Male</option>
+                        <option value="FeMale" class="row text-start">FeMale</option>
+                      </select>
+                      <div class="text-danger position-absolute start-0 top-100">
+                        @if (gender?.touched){
+                        @if (gender?.errors?.['required']){
+                        <span>This field is required.</span>
+                        }
+                        @else if (gender?.errors?.['maxlength']){
+                        <span>Length is less than 10 characters</span>
+                        }
+                        @else if (gender?.errors?.['minlength']){
+                        <span>Length is more than 1 characters</span>
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- dateOfBirth -->
+                  <div class="col-md-6">
+                    <div class="position-relative mb-4">
+                      <label for="dateOfBirth" class="form-label fs-base">Date of Birth</label>
+                      <input id="dateOfBirth" placeholder="Select your date of birth" type="date"
+                        class="form-control form-control-lg" formControlName="dateOfBirth" autofocus="false">
+                      <div class="text-danger position-absolute start-0 top-100">
+                        @if(dateOfBirth?.touched){
+                        @if(dateOfBirth?.errors?.['required']){
+                        <span>This field is required.</span>
+                        }
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Address -->
+                  <div class="col-md-6">
+                    <div class="position-relative mb-4">
+                      <label for="address" class="form-label fs-base">Address</label>
+                      <input type="text" id="address" placeholder="Enter your address"
+                        class="form-control form-control-lg" formControlName="address">
+                      <div class="text-danger position-absolute start-0 top-100">
+                        @if(address?.touched){
+                        @if (address?.errors?.['required']){
+                        <span>This field is required.</span>
+                        }
+                        @else if (address?.errors?.['maxlength']){
+                        <span>Length is less than 500 characters</span>
+                        }
+                        @else if (address?.errors?.['minlength']){
+                        <span>Length is more than 1 characters</span>
+                        }
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Image -->
+                  <div class="col d-flex justify-content-center">
+                    <div class="position-relative mb-4">
+                      <label for="cardImage" class="form-label fs-base me-2 d-block">Select Image (optional)</label>
+                      <input type="file" id="cardImage" (change)="onImageSelected($event)" accept="image/*">
+                      <img src="{{photoBase64String}}" class="d-block" height="260" width="400">
+                      <div class="text-danger position-absolute start-0 top-100">
+                        @if(isImage){
+                        @if (isItLargerThanOneGigabyte) {
+                        <span>The file size must be less than 1 MB</span>
+                        }
+                        }@else {
+                        <span class="text-danger">The file format is not accepted, Choose the image file format</span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+
+              <button [disabled]="addBusinessCardForm.invalid || isItLargerThanOneGigabyte"
+                class="btn text-light shadow-primary btn-lg w-100 mt-4" style="background-color: #004080;"
+                (click)="showPopup()">Preview</button>
+              <hr class="my-4">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- From xml/csv -->
+    <div class="tab-pane fade" [ngClass]="{'show active': !fromForm}">
+      <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+        <div class="col-10 mx-auto text-center" style="height: 100vh;">
+          <p class="text-primary text-center mb-5">*Please upload the file and choose an image for your business card
+          </p>
+
+          <!-- Button to upload CSV -->
+          <label for="upload" class="btn border-2 p-3 text-light mx-2" style="background-color: #004080;">Upload
+            CSV or XML</label>
+          <input type="file" id="upload" accept=".xml, .csv" (change)="onSelectedXmlOrCsv($event)" hidden>
+
+          @if (filename.length >0) {
+          <label class="text-center fs-large fw-bold">File Name: {{filename}}</label>
+          }
+
+          <div class="position-relative mx-auto mt-5" style="width: fit-content;">
+            <input type="file" (change)="onImageSelected($event)" accept="image/*">
+            <img src="{{photoBase64String}}" class="d-block" height="260" width="400">
+            <div class="text-danger position-absolute start-0 top-100">
+              @if(isImage){
+              @if (isItLargerThanOneGigabyte) {
+              <span>The file size must be less than 1 MB</span>
+              }
+              }@else {
+              <span class="text-danger">The file format is not accepted, Choose the image file format</span>
+              }
+            </div>
+          </div>
+
+          @if(!isAcceptedFiles){
+          <p class="text-danger mt-4">Only file formats are accepted: .csv , .xml</p>
+          }
+          @else if(!isItAValidCsvFormat){
+          <p class="text-danger mt-4"> Invalid CSV format. The correct format begins with:
+            <span class="fw-bold">Name,Gender,DateOfBirth,Email,Phone,Address</span>
+          </p>
+          }
+          @else if(isAcceptedFiles && isItAValidCsvFormat && businessCard){
+          <button class="btn text-light shadow-primary btn-lg mt-5 d-block text-center mx-auto"
+            style="background-color: #004080;" (click)="showPopup()">Preview</button>
+          }
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Bootstrap Modal -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isPopupVisible}"
+  [ngStyle]="{'display': isPopupVisible ? 'block' : 'none'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Your Business Card</h5>
+        <button type="button" class="btn-close" (click)="closePopup()"></button>
+      </div>
+      <div class="modal-body">
+        @if(fromForm){
+
+        @if(photoBase64String){
+        <strong>Photo:</strong>
+        <img src="{{photoBase64String}}" alt="Business Card Photo" class="img-thumbnail mx-auto" width="150">
+        }
+
+        <p><strong>Name:</strong> {{ name?.value }}</p>
+        <p><strong>Email:</strong> {{email?.value }}</p>
+        <p><strong>Phone:</strong> {{phone?.value }}</p>
+        <p><strong>Gender:</strong> {{ gender?.value }}</p>
+        <p><strong>Date of Birth:</strong> {{dateOfBirth?.value }}</p>
+        <p><strong>Address:</strong> {{ address?.value }}</p>
+        }@else {
+
+        @if(businessCard?.photoBase64){
+        <strong>Photo: (optional)</strong>
+        <img src="{{businessCard?.photoBase64}}" alt="Business Card Photo" class="img-thumbnail mx-auto" width="150">
+        }
+
+        <p><strong>Name:</strong> {{businessCard?.name}}</p>
+        <p><strong>Email:</strong> {{businessCard?.email}}</p>
+        <p><strong>Phone:</strong> {{businessCard?.phone}}</p>
+        <p><strong>Gender:</strong> {{businessCard?.gender}}</p>
+        <p><strong>Date of Birth:</strong> {{businessCard?.dateOfBirth}}</p>
+        <p><strong>Address:</strong> {{businessCard?.address}}</p>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" [disabled]="isBusy" (click)="addBusinessCard()">Accept</button>
+        <button type="button" class="btn btn-danger" (click)="closePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop -->
+@if(isPopupVisible){
+<div class="modal-backdrop fade show"></div>
+}

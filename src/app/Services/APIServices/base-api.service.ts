@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../../Constants/AppConstants';
@@ -8,17 +8,23 @@ import { AppConstants } from '../../Constants/AppConstants';
 })
 export class BaseAPIService {
   private readonly baseUrl = AppConstants.baseURL;
-  private genericError = "";
   httpClient = inject(HttpClient);
 
   constructor() {
-    this.genericError = `Some Error occcured, Please contact Administrator for the Errors`;
   }
 
   //get
   get(endpoint: string): Observable<any> {
     var finalUrl = `${this.baseUrl}/${endpoint}`;
     let response = this.httpClient.get<any>(finalUrl);
+
+    return response;
+  }
+
+  getImageFile(endpoint: string): Observable<Blob> {
+    var finalUrl = `${this.baseUrl}/${endpoint}`;
+    let response = this.httpClient.get(finalUrl, { responseType: 'blob' });
+
     return response;
   }
 
@@ -45,4 +51,17 @@ export class BaseAPIService {
 
     return response;
   }
+
+  //Not used
+  // import(endpoint: string, file: File): Observable<any> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('file', file, file.name);
+
+  //   var finalUrl = `${this.baseUrl}/${endpoint}`;
+
+  //   return this.httpClient.post(`${finalUrl}`, formData, {
+  //     headers: new HttpHeaders({ Accept: 'application/json' }),
+  //     responseType: 'text', // Modify response type as needed
+  //   });
+  // }
 }

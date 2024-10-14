@@ -1,3 +1,168 @@
-<p>Number of business cards: {{businessCards[0] | json}}</p>
+<div class="container mt-5 pt-5">
+  @if (businessCards.length > 0 || isFilter) {
+  <div class="row justify-content-md-center">
+    <div class="col-md-5">
+      <img src="assets/Images/filter.png" class="hov shadow-sm mb-2 border rounded"
+        style="padding: 2px; width: 30px; height: 30px;" alt="filter icon" (click)="showFiltersPopup()">
 
-<button class="btn btn-primary" (click)="navTo('AddBusinessCard')">click</button>
+      <span class="ms-4"><strong>Results:</strong> {{businessCards.length}}</span>
+    </div>
+  </div>
+  }
+  <div class="row" style="height: 100vh;">
+    @if(businessCards.length > 0){ <div class="col">
+      @for (card of businessCards; track card) {
+      <!-- Business Card -->
+      <div class="row mx-auto mb-3 position-relative"
+        style="background-color: #004080; width: 540px; border-color: #004080; border:1px solid #004080; border-radius: 10px; overflow: hidden;">
+        <div class="col-4 d-flex">
+          @if (card.photoBase64) {
+          <img src="{{card.photoBase64}}" class="img-fluid rounded-start align-self-center" alt="{{ card.name }}">
+          }
+          @else {
+          <img src="assets/Images/default.png" class="img-fluid rounded-start align-self-center" alt="default avatar">
+          }
+        </div>
+        <div class="col-8">
+          <div class="card-body">
+            <h5 class="card-title" style="color: #ffffff;">{{ card.name }}</h5>
+            <p class="card-text"> <strong> Gender:&ThickSpace;</strong> {{ card.gender }}</p>
+            <p class="card-text">
+              <strong> Date of Birth:&ThickSpace;</strong> {{ card.dateOfBirth | date}}
+            </p>
+            <p class="card-text"> <strong> Email:&ThickSpace;</strong> <a style="color: orange;"
+                href="mailto:{{ card.email }}">{{ card.email }}</a></p>
+            <p class="card-text">
+              <strong> Phone:&ThickSpace;</strong> <a href="tel:{{ card.phone }}">{{ card.phone }}</a>
+            </p>
+            <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              <strong> Address:&ThickSpace;</strong> {{ card.address }}
+            </p>
+          </div>
+        </div>
+        <div class="position-absolute" style="left: calc(100% - 100px); top: 20px;">
+          <div class="d-flex flex-row">
+            <img class="me-2 hov" src="assets/Images/trash.png" width="32" height="32" (click)="deleteCard(card.id)">
+            <img class="hov" src="assets/Images/export.png" width="32" height="32" (click)="showPopup(card.id)">
+
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    }@else if(!isBusy && !isFilter){
+    <div class="col" style="height: 100vh;">
+      <h1 class="text-center border-2 rounded-2 p-2"
+        style="color: silver; width: fit-content; margin: auto; border-style: dotted;">
+        There are no business cards stored. </h1>
+      <img src="assets/Images/downarrow.png" class="text-center d-block mx-auto mt-5" width="200" height="200">
+      <a (click)="navTo('AddBusinessCard')" class="text-center display-6 d-block mx-auto mt-5 fs-large hov"
+        style="color: #004080; cursor: pointer;"> Add a business card</a>
+    </div>
+    }
+  </div>
+</div>
+
+<!--  export popup -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isPopupVisible}"
+  [ngStyle]="{'display': isPopupVisible ? 'block' : 'none'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Export Business Card</h5>
+        <button type="button" class="btn-close" (click)="closePopup()"></button>
+      </div>
+      <div class="modal-body">
+        <h3 class="d-inline">Download as: </h3>
+        <button type="button" class="btn shadow-2 text-light me-2" style="background-color: #004080;"
+          (click)="exportCard(fileTypes.Xml)">Xml</button>
+        <span class="fs-large">|</span>
+        <button type="button" class="btn shadow-2 border-2 text-light ms-2" style="background-color: #004080;"
+          (click)="exportCard(fileTypes.Csv)">Csv</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters Popup -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isfiltersPopupVisible}"
+  [ngStyle]="{'display': isfiltersPopupVisible ? 'block' : 'none', 'font-size': '12px'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Filter Business Cards</h5>
+        <button type="button" class="btn-close" (click)="closePopup()"></button>
+      </div>
+      <div class="modal-body" style="padding: 10px;">
+        <form [formGroup]="filterForm">
+          <!-- Name and Phone Inputs -->
+          <div class="row mb-3">
+            <!-- Name Input -->
+            <div class="col-md-6">
+              <label for="name" class="form-label fw-bold">Name</label>
+              <input id="name" formControlName="name" type="text" class="form-control p-2"
+                style="background-color: aliceblue;" placeholder="Enter name" />
+            </div>
+
+            <!-- Phone Input -->
+            <div class="col-md-6">
+              <label for="phone" class="form-label fw-bold">Phone</label>
+              <input id="phone" formControlName="phone" type="text" class="form-control p-2"
+                style="background-color: aliceblue;" placeholder="Enter phone number" />
+            </div>
+          </div>
+
+          <!-- Email and Gender Inputs -->
+          <div class="row mb-3">
+            <!-- Email Input -->
+            <div class="col-md-6">
+              <label for="email" class="form-label fw-bold">Email</label>
+              <input id="email" formControlName="email" type="email" class="form-control p-2"
+                style="background-color: aliceblue;" placeholder="Enter email" />
+            </div>
+
+            <!-- Gender Input -->
+            <div class="col-md-6">
+              <label for="gender" class="form-label fw-bold">Gender</label>
+              <select id="gender" formControlName="gender" class="form-select p-2" style="background-color: aliceblue;">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Date of Birth Input (Full Width) -->
+          <div class="mb-3">
+            <label for="dateOfBirth" class="form-label fw-bold">Date of Birth</label>
+            <input id="dateOfBirth" formControlName="dateOfBirth" type="date" class="form-control p-2"
+              style="background-color: aliceblue;" />
+          </div>
+
+          <div class="text-end mt-3">
+            <button type="reset" class="btn text-light me-2"
+              style="background-color: #03488d; padding: 5px 10px;">Reset</button>
+
+            <button class="btn text-light" (click)="filter()"
+              style="background-color: #004080; padding: 5px 10px;">Filter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Backdrop -->
+@if(isPopupVisible || isfiltersPopupVisible){
+<div class="modal-backdrop fade show"></div>
+}
+
+@if(isBusy){
+<!-- Account messages -->
+
+<lottie-player class="position-absolute" style="left: calc(50% - 55px); top: 5%; width: 110px; height: 110px;"
+  src="../../../assets/Json/loading.json" background="transparent" speed="1" loop autoplay></lottie-player>
+
+}

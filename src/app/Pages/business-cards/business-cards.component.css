@@ -1,0 +1,33 @@
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: 5px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-text strong,p,a{
+  color: white;
+  padding: 0%;
+  margin: 0%;
+}
+
+.hov:hover{
+  opacity: .6;
+}
+/* Modal Overlay Customization */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}
+

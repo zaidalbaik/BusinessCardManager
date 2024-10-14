@@ -5,6 +5,7 @@ import { HomeComponent } from './Pages/home/home.component';
 import { BusinessCardsComponent } from './Pages/business-cards/business-cards.component';
 import { AddBusinessCardComponent } from './Pages/add-business-card/add-business-card.component';
 import { addBusinessCardGuard } from './Guards/add-business-card.guard';
+import { HeaderComponent } from './Elements/header/header.component';
 
 export const routes: Routes = [
   { path: "", redirectTo: `/${PathsNames.home}`, pathMatch: "full" },
@@ -25,5 +26,6 @@ export const routingComponents = [
   HomeComponent,
   Error404Component,
   BusinessCardsComponent,
-  AddBusinessCardComponent
+  AddBusinessCardComponent,
+  HeaderComponent
 ]

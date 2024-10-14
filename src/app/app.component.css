@@ -2,9 +2,10 @@
   position: fixed;
   bottom: 80px;
   right: 20px;
-  background-color: #33516a;
+  background-color: #004080;
 }
 
 .btn-to-top:hover{
   opacity: .7;
 }
+
